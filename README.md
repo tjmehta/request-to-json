@@ -17,7 +17,7 @@ http.createServer(function (req) {
   reqToJSON(req)
   /*
   {
-    headers: {},
+    headers: {<headers>},
     body: 'hello',
     httpVersion: '1.1',
     method: 'GET',
@@ -37,14 +37,14 @@ http.createServer(function (req) {
   reqToJSON(res, true) // true will return raw headers and trailers
   /*
   {
-    headers: {},
+    headers: {<headers>},
     body: 'hello',
     httpVersion: '1.1',
     method: 'GET',
     trailers: {},
     url: '/?foo=bar',
     // additional properties
-    rawHeaders: [],
+    rawHeaders: [], // not available in node@v0.10.x
     rawTrailers: [],
     // url parsed properties
     host: 'localhost:80'
@@ -61,7 +61,7 @@ http.createServer(function (req) {
   reqToJSON(res, ['customProp1']) // true will return raw headers and trailers
   /*
   {
-    headers: {},
+    headers: {<headers>},
     body: 'hello',
     httpVersion: '1.1',
     method: 'GET',
@@ -92,7 +92,7 @@ app.get('user/:id', function (req) {
   reqToJSON(req)
   /*
   {
-    headers: {},
+    headers: {<headers>},
     body: 'hello',
     httpVersion: '1.1',
     method: 'GET',
@@ -117,7 +117,7 @@ app.get('user/:id', function (req) {
   reqToJSON(res, true) // true will return raw headers and trailers
   /*
   {
-    headers: {},
+    headers: {<headers>},
     body: 'hello',
     httpVersion: '1.1',
     method: 'GET',
@@ -153,7 +153,7 @@ app.get('user/:id', function (req) {
   reqToJSON(res, ['customProp1']) // true will return raw headers and trailers
   /*
   {
-    headers: {},
+    headers: {<headers>},
     body: 'hello',
     httpVersion: '1.1',
     method: 'GET',
