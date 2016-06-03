@@ -1,0 +1,42 @@
+{
+  "name": "request-to-json",
+  "version": "0.0.0",
+  "description": "Returns a JSON representation of request (supports koa/express requests props)",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "istanbul cover _mocha ./test && istanbul --text check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tjmehta/request-to-json.git"
+  },
+  "keywords": [
+    "req",
+    "request",
+    "to",
+    "json",
+    "convert",
+    "cast",
+    "to-json",
+    "return",
+    "res"
+  ],
+  "author": "Tejesh Mehta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tjmehta/request-to-json/issues"
+  },
+  "homepage": "https://github.com/tjmehta/request-to-json",
+  "devDependencies": {
+    "code": "^1.5.0",
+    "express": "^4.13.4",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "101": "^1.5.0"
+  }
+}
