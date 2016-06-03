@@ -51,8 +51,8 @@ function getParsedUrl (req) {
   var host = req.headers && req.headers.host
   var fullUrl = host
     ? [protocol, '//', host, req.url].join('')
-    : req.url
-  var parsedUrl = pick(url.parse(fullUrl, true), [
+    : null
+  var parsedUrl = pick(url.parse(fullUrl || req.url, true), [
     'host',
     'hostname',
     'pathname',

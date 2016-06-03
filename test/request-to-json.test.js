@@ -15,6 +15,11 @@ describe('request-to-json', function () {
     beforeEach(function (done) {
       var self = this
       this.server = http.createServer(function (req, res) {
+        if (req.url.match(/coveragetest/)) {
+          req.connection.encrypted = true // mock https
+          // mock removed host
+          delete req.headers.host
+        }
         self.req = req
         self.json = reqToJSON(req)
         res.write('hello world')
@@ -52,6 +57,40 @@ describe('request-to-json', function () {
             query: { key: 'val' },
             path: '/path',
             fullUrl: 'http://localhost:3030/path?key=val'
+          })
+          done()
+        })
+        req.write('body')
+        req.end()
+      })
+
+      it('should json a request (https and no host header)', function (done) {
+        var self = this
+        var opts = {
+          method: 'POST',
+          port: PORT,
+          path: '/path?key=val&coveragetest=true'
+        }
+        var req = http.request(opts, function () {
+          expect(self.json).to.deep.equal({
+            headers: {
+              connection: 'close',
+              'transfer-encoding': 'chunked'
+            },
+            httpVersion: '1.1',
+            method: 'POST',
+            trailers: {},
+            url: '/path?key=val&coveragetest=true',
+            host: null,
+            hostname: null,
+            port: null,
+            protocol: 'https:',
+            query: {
+              coveragetest: 'true',
+              key: 'val'
+            },
+            path: '/path',
+            fullUrl: null
           })
           done()
         })
