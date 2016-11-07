@@ -35,6 +35,7 @@ function reqToJSON (req, additional) {
     'method',
     'trailers',
     'url',
+    'socket.remoteAddress',
     // express/koa
     'originalUrl',
     'params',
