@@ -46,6 +46,9 @@ describe('request-to-json', function () {
               connection: 'close',
               'transfer-encoding': 'chunked'
             },
+            socket: {
+              remoteAddress: '::ffff:127.0.0.1'
+            },
             httpVersion: '1.1',
             method: 'POST',
             trailers: {},
@@ -57,7 +60,7 @@ describe('request-to-json', function () {
             query: { key: 'val' },
             path: '/path',
             fullUrl: 'http://localhost:3030/path?key=val'
-          })
+          }, { prototype: false })
           done()
         })
         req.write('body')
@@ -77,6 +80,9 @@ describe('request-to-json', function () {
               connection: 'close',
               'transfer-encoding': 'chunked'
             },
+            socket: {
+              remoteAddress: '::ffff:127.0.0.1'
+            },
             httpVersion: '1.1',
             method: 'POST',
             trailers: {},
@@ -91,7 +97,7 @@ describe('request-to-json', function () {
             },
             path: '/path',
             fullUrl: null
-          })
+          }, { prototype: false })
           done()
         })
         req.write('body')
@@ -132,6 +138,9 @@ describe('request-to-json', function () {
               connection: 'close',
               'transfer-encoding': 'chunked'
             },
+            socket: {
+              remoteAddress: '::ffff:127.0.0.1'
+            },
             httpVersion: '1.1',
             ip: '::ffff:127.0.0.1',
             ips: [],
@@ -158,7 +167,7 @@ describe('request-to-json', function () {
             protocol: 'http:',
             path: '/path',
             fullUrl: 'http://localhost:3030/path?key=val'
-          })
+          }, { prototype: false })
           done()
         })
         req.write('body')
