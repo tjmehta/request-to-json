@@ -3,8 +3,6 @@ var url = require('url')
 var defaults = require('101/defaults')
 var pick = require('101/pick')
 
-var urlKeys =
-
 module.exports = reqToJSON
 
 /**
