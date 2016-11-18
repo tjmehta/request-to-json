@@ -1,6 +1,6 @@
 {
   "name": "request-to-json",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Returns a JSON representation of request (supports koa/express requests props)",
   "main": "index.js",
   "directories": {
