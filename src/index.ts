@@ -10,6 +10,7 @@ export interface IncomingMessageJSON {
   complete: boolean
   headers: IncomingMessage['headers']
   trailers: IncomingMessage['trailers']
+  query?: ExpressRequest['query']
   statusCode?: number
   statusMessage?: string
   method?: string
@@ -97,6 +98,8 @@ export default function requestToJSON(
   if (null != im.statusMessage) imJSON.statusMessage = im.statusMessage
   if (null != im.method) imJSON.method = im.method
   if (null != im.url) imJSON.url = im.url
+  // @ts-ignore
+  if (null != im.query) imJSON.query = im.query
 
   const expressReq = req as ExpressRequest
   const expressJSON = json as ExpressRequestJSON
