@@ -1,6 +1,6 @@
 {
   "name": "request-to-json",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Returns a JSON representation of request (supports koa/express requests props)",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
