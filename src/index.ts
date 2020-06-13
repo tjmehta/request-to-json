@@ -15,6 +15,7 @@ export interface IncomingMessageJSON {
   statusMessage?: string
   method?: string
   url?: string
+  originalUrl?: string
 }
 
 export interface ExpressRequestJSON {
@@ -100,6 +101,8 @@ export default function requestToJSON(
   if (null != im.url) imJSON.url = im.url
   // @ts-ignore
   if (null != im.query) imJSON.query = im.query
+  // @ts-ignore
+  if (null != im.originalUrl) imJSON.originalUrl = im.originalUrl
 
   const expressReq = req as ExpressRequest
   const expressJSON = json as ExpressRequestJSON
