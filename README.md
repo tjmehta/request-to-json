@@ -1,183 +1,156 @@
 # request-to-json [![Build Status](https://travis-ci.org/tjmehta/request-to-json.svg?branch=master)](https://travis-ci.org/tjmehta/request-to-json)
+
 Returns a JSON representation of request (supports koa/express requests props)
 
 # Installation
+
 ```bash
 npm i --save request-to-json
 ```
 
 # Usage
-http server request
+
+#### Supports both ESM and CommonJS
+
 ```js
-var http = require('http')
-var reqToJSON = require('request-to-json')
+// esm
+import reqToJSON from 'request-to-json'
+// commonjs
+const reqToJSON = require('request-to-json')
+```
+
+#### HTTP server request to JSON
+
+```js
+import http from 'http'
+import reqToJSON from 'request-to-json'
 
 http.createServer(function (req) {
-  // Default behavior
   reqToJSON(req)
   /*
   {
-    headers: {<headers>},
-    body: 'hello',
-    httpVersion: '1.1',
-    method: 'GET',
-    trailers: {},
-    url: '/?foo=bar',
-    // url parsed properties
-    host: 'localhost:80'
-    hostname: 'localhost',
-    port: '80',
-    protocol: 'http:',
-    query: { foo: bar },
-    path: '/',
-    fullUrl: 'http://localhost:80/?foo=bar'
-  }
-  */
-  // Pass true to include rawHeaders and rawTrailers
-  reqToJSON(res, true) // true will return raw headers and trailers
-  /*
-  {
-    headers: {<headers>},
-    body: 'hello',
-    httpVersion: '1.1',
-    method: 'GET',
-    trailers: {},
-    url: '/?foo=bar',
-    // additional properties
-    rawHeaders: [], // not available in node@v0.10.x
-    rawTrailers: [],
-    // url parsed properties
-    host: 'localhost:80'
-    hostname: 'localhost',
-    port: '80',
-    protocol: 'http:',
-    query: { foo: bar },
-    path: '/',
-    fullUrl: 'http://localhost:80/?foo=bar'
-  }
-  */
-  // Pass array of strings to include custom properties (supports keypaths)
-  req.customProp1 = 'hai'
-  reqToJSON(res, ['customProp1']) // true will return raw headers and trailers
-  /*
-  {
-    headers: {<headers>},
-    body: 'hello',
-    httpVersion: '1.1',
-    method: 'GET',
-    trailers: {},
-    url: 'http://localhost:80?foo=bar',
-    // url parsed properties
-    host: 'localhost:80'
-    hostname: 'localhost',
-    port: '80',
-    protocol: 'http:',
-    query: { foo: bar },
-    path: '/?foo=bar'
-    pathname: '/,
-    // custom
-    customProp1: 'hai'
+    "aborted": false,
+    "complete": true,
+    "headers": Object {
+      "connection": "close",
+      "host": "localhost:3033",
+    },
+    "httpVersion": "1.1",
+    "method": "GET",
+    "trailers": Object {},
+    "url": "/",
   }
   */
 })
 ```
 
-express request (koa request should have same properties)
-```js
-var app = require('express')()
-var reqToJSON = require('request-to-json')
+#### Express request to JSON
 
+```js
+import express from 'express'
+import reqToJSON from 'request-to-json'
+
+const app = express()
 app.get('user/:id', function (req) {
-  // Default behavior
   reqToJSON(req)
   /*
   {
-    headers: {<headers>},
-    body: 'hello',
-    httpVersion: '1.1',
-    method: 'GET',
-    trailers: {},
-    url: '/user/abcdef?foo=bar',
-    // express request properties
-    originalUrl: '/user/abcdef?foo=bar',
-    params: { id: 'abcdef' },
-    query: { foo: bar },
-    length: '<content-length>',
-    // url parsed properties
-    host: 'localhost:80'
-    hostname: 'localhost',
-    port: '80',
-    protocol: 'http:',
-    // query: { foo: bar }, // uses express req's
-    path: '/',
-    fullUrl: 'http://localhost:80/?foo=bar'
+    "aborted": false,
+    "baseUrl": "",
+    "complete": true,
+    "fresh": false,
+    "headers": Object {
+      "connection": "close",
+      "host": "localhost:3033",
+    },
+    "host": "localhost",
+    "hostname": "localhost",
+    "httpVersion": "1.1",
+    "ips": Array [],
+    "method": "GET",
+    "originalUrl": "/",
+    "params": Object {},
+    "path": "/",
+    "protocol": "http",
+    "query": Object {},
+    "secure": false,
+    "stale": true,
+    "subdomains": Array [],
+    "trailers": Object {},
+    "url": "/",
+    "xhr": false,
   }
   */
-  // Pass true to include rawHeaders and rawTrailers
-  reqToJSON(res, true) // true will return raw headers and trailers
+})
+```
+
+#### Koa request to JSON
+
+```js
+import koa from 'koa'
+import reqToJSON from 'request-to-json'
+
+const app = new Koa()
+app.use(async function (ctx, next) {
+  reqToJSON(ctx)
   /*
   {
-    headers: {<headers>},
-    body: 'hello',
-    httpVersion: '1.1',
-    method: 'GET',
-    trailers: {},
-    url: '/user/abcdef?foo=bar',
-    // express request properties
-    originalUrl: '/user/abcdef?foo=bar',
-    params: { id: 'abcdef' },
-    query: { foo: bar },
-    length: '<content-length>',
-    // additional properties
-    rawHeaders: [],
-    rawTrailers: [],
-    // additional express properties
-    fresh: true,
-    cookies: '<cookies>',
-    ip: '<ip>',
-    ips: [<ips>],
-    stale: false,
-    subdomains: [<subdomains>],
-    // url parsed properties
-    host: 'localhost:80'
-    hostname: 'localhost',
-    port: '80',
-    protocol: 'http:',
-    // query: { foo: bar }, // uses express req's
-    path: '/',
-    fullUrl: 'http://localhost:80/?foo=bar'
+    "body": "hello world",
+    "cookies": Object {
+      "secure": false,
+    },
+    "fresh": false,
+    "headers": Object {
+      "connection": "close",
+      "host": "localhost:3033",
+      "x-custom": "custom",
+    },
+    "host": "localhost:3033",
+    "hostname": "localhost",
+    "href": "http://localhost:3033/",
+    "ip": "",
+    "ips": Array [],
+    "method": "GET",
+    "origin": "http://localhost:3033",
+    "originalUrl": "/",
+    "path": "/",
+    "protocol": "http",
+    "query": Object {},
+    "secure": false,
+    "stale": true,
+    "subdomains": Array [],
+    "url": "/",
   }
   */
-  // Pass array of strings to include custom properties (supports keypaths)
-  req.customProp1 = 'hai'
-  reqToJSON(res, ['customProp1']) // true will return raw headers and trailers
+  reqToJSON(ctx.request)
   /*
   {
-    headers: {<headers>},
-    body: 'hello',
-    httpVersion: '1.1',
-    method: 'GET',
-    trailers: {},
-    url: '/user/abcdef?foo=bar',
-    // express request properties
-    originalUrl: '/user/abcdef?foo=bar',
-    params: { id: 'abcdef' },
-    query: { foo: bar },
-    length: '<content-length>',
-    // additional user properties
-    customProp1: 'hai'
-    // url parsed properties
-    host: 'localhost:80'
-    hostname: 'localhost',
-    port: '80',
-    protocol: 'http:',
-    // query: { foo: bar }, // uses express req's
-    path: '/',
-    fullUrl: 'http://localhost:80/?foo=bar'
+    "fresh": false,
+    "headers": Object {
+      "connection": "close",
+      "host": "localhost:3033",
+      "x-custom": "custom",
+    },
+    "host": "localhost:3033",
+    "hostname": "localhost",
+    "href": "http://localhost:3033/",
+    "ip": "",
+    "ips": Array [],
+    "method": "GET",
+    "origin": "http://localhost:3033",
+    "originalUrl": "/",
+    "path": "/",
+    "protocol": "http",
+    "query": Object {},
+    "secure": false,
+    "stale": true,
+    "subdomains": Array [],
+    "url": "/",
   }
   */
 })
 ```
 
 # License
+
 MIT
